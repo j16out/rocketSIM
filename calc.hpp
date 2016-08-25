@@ -58,7 +58,7 @@ struct fvec
 void initialize(prock & rp, frock & rf, string filename);
 
 
-void calc_forces(prock & rp, frock & rf);
+void calc_forces(prock & rp, frock & rf, float tstep);
 
 void calc_kinematics(prock & rp, float tstep);
 
@@ -69,6 +69,7 @@ void set_stmass(float temp);
 void set_dragCd(float temp);
 void set_Xarea(float temp);
 void set_wind(float temp);
+void use_thrustCurve(string filename);
 
 float get_btime();
 float mag(vec v1);

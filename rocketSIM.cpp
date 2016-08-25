@@ -30,7 +30,8 @@ float delay = 7.0;
 
 
 //initialize
-initialize(rp1, rf1,"Payloader_D12-7.txt");
+initialize(rp1, rf1,"spec/Arachnid_D12.txt");
+use_thrustCurve("spec/D12-5.txt");
 btime = get_btime();
 int ind = 0;
 
@@ -41,7 +42,7 @@ int ind = 0;
 //--------------thrust----------------//
 for(int i = 0; i < (btime/tstep); ++i)
 {
-calc_forces(rp1, rf1);
+calc_forces(rp1, rf1, (ind*tstep));
 calc_kinematics(rp1, tstep);
 log_data(rp1, dfinal);
 ++ind;
@@ -58,7 +59,7 @@ set_stmass(0.0);
 
 for(int i = 0; i < (delay/tstep); ++i)
 {
-calc_forces(rp1, rf1);
+calc_forces(rp1, rf1, 0);
 calc_kinematics(rp1, tstep);
 log_data(rp1, dfinal);
 ++ind;
@@ -74,7 +75,7 @@ deploy_Chute();
 
 while(rp1.d.y > 0)
 {
-calc_forces(rp1, rf1);
+calc_forces(rp1, rf1, 0);
 calc_kinematics(rp1, tstep);
 log_data(rp1, dfinal);
 }

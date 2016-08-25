@@ -10,7 +10,7 @@ void normalize(vec & vf, vec v1);
 
 
 
-//functions
+//globals
 float dragCd = 0;
 float Xarea = 0;
 float stmass = 0;
@@ -24,9 +24,18 @@ float tmass = 0;//kg
 float para = 0;
 float vintx, vinty;
 bool par = true;
+bool thcurv = false;
+
+float pp0 = 0.035;//rise time
+float pp1 = 100;
+float pp2 = 10;//height of lowlevel platue
+float pp3 = 0.075;//center
+float pp4 = 20;//height
+float pp5 =0.075;//width
+float pp6 = 0.25;//center
 
 
-
+//functions
 
 
 void initialize(prock & rp, frock & rf, string filename)
@@ -130,9 +139,75 @@ rf.ft.y = 0;
 stmass = promass/(btime/tstep);
 }
 
+
+void use_thrustCurve(string filename)
+{
+
+
+const char* search1 = "% Pp0:";
+const char* search2 = "% Pp1:";
+const char* search3 = "% Pp2:";
+const char* search4 = "% Pp3:";
+const char* search5 = "% Pp4:";
+const char* search6 = "% Pp5:";
+const char* search7 = "% Pp6:";
+
+
+
+const char* c = filename.c_str();
+
+ifstream file(c);
+		string str, temp, tomp; 
+		string::size_type sz;
+		while (getline(file, str))
+		 { if (str.find(search1, 0) != string::npos)
+				 {  getline(file, str);
+				   pp0 = ::atof(str.c_str());   
+					cout << "found wind: " << pp0;
+		   		 }
+		   		 
+		   if (str.find(search2, 0) != string::npos)
+				 {  getline(file, str);
+				   pp1 = ::atof(str.c_str());   
+					cout << "found btime: " << pp1;
+		   		 }
+		   		 
+		   if (str.find(search3, 0) != string::npos)
+				 {  getline(file, str);
+				  pp2 = ::atof(str.c_str());   
+					cout << "found tmass: " << pp2;
+		   		 }
+		   if (str.find(search4, 0) != string::npos)
+				 {  getline(file, str);
+				  pp3 = ::atof(str.c_str());   
+					cout << "found dragCd: " << pp3;
+		   		 }
+		   		 
+		   if (str.find(search5, 0) != string::npos)
+				 {  getline(file, str);
+				  pp4 = ::atof(str.c_str());   
+					cout << "found thrust: " << pp4;
+		   		 }
+		   		 
+		   if (str.find(search6, 0) != string::npos)
+				 {  getline(file, str);
+				  pp5 = ::atof(str.c_str());   
+					cout << "found area: " << pp5;
+				 }
+		   if (str.find(search7, 0) != string::npos)
+				 {  getline(file, str);
+				  pp6 = ::atof(str.c_str());   
+					cout << "found area: " << pp6;
+				 }
+		}
+file.close();
+
+thcurv = true;
+
+}
 //--------------Calc & Sum forces---------------//
 
-void calc_forces(prock & rp, frock & rf)
+void calc_forces(prock & rp, frock & rf, float tstep)
 {
 rp.m = rp.m - stmass;
 //drag calc
@@ -159,6 +234,14 @@ printf("fgravityx %f fgravityy %f\n", rf.fg.x , rf.fg.y);
 
 
 //thrust
+if(thcurv)
+{
+float x = tstep;
+thrust = (pp4*exp(-0.5*pow((x-pp6)/pp5,2)))+(((x-pp3)>0)*(-(pp2)*(exp(-(x-pp3)/pp0)-exp(-(x-pp3)/pp1))));
+ if(thrust < 0)
+ thrust = thrust*(-1.0);
+printf("thrust %f \n", thrust);
+}
 normalize(temp, rp.v);
 rf.ft.x = thrust*(temp.x);
 rf.ft.y = thrust*(temp.y);
@@ -193,10 +276,18 @@ dfinal.x = rp.v.x*(tstep) + (0.5)*a.x*pow(tstep,2);
 dfinal.y = rp.v.y*(tstep) + (0.5)*a.y*pow(tstep,2);
 
 //printf("Intial vx %f, vy %f, dx %f, dy %f, m %f\n", rp.v.x, rp.v.y, rp.d.x, rp.d.y, rp.m);
+if(rp.d.y >= 0)
+{
 rp.d.x = rp.d.x + dfinal.x;
 rp.d.y = rp.d.y + dfinal.y;
 rp.v.x = vfinal.x;
 rp.v.y = vfinal.y;
+}
+else
+{
+rp.v.y = abs(rp.v.y);
+rp.d.y = 0;
+}
 printf("Final vx %f, vy %f, dx %f, dy %f, m %f\n\n\n", rp.v.x, rp.v.y, rp.d.x, rp.d.y, rp.m);
 
 
@@ -244,6 +335,7 @@ return vs;
 
 void set_thrust(float temp){
 thrust = temp;
+thcurv = false;
 }
 void set_stmass(float temp){
 stmass = temp;

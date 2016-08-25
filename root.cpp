@@ -2,6 +2,7 @@
 
 using namespace std;
 
+
 void draw_graph(fvec dfinal, int index1, int index2)
 {
 

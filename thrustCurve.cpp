@@ -1,13 +1,5 @@
-/*data index:
-104 - pmt vs pmt
-105 cfd sipm vs pmt 27.5
-106 sipm vs pmt 27.5
-107 sipm vs pmt 28.5
-108 sipm vs pmt 26.5
-109 cfd sipm vs pmt 26.5
-110 cfd sipm vs pmt 28.5
-*/
-
+//used to generate nessary parameters for equation modelling thrust levels
+//not used during actual sim, run individually the make engine file with new params
 
 
 

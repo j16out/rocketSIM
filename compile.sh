@@ -15,7 +15,7 @@ echo "Reminder: Make sure root is sourced"
 
 rm mtest1
 #macro2
-g++ rocketSIM.cpp calc.cpp root.cpp -o2 -o mtest1 `root-config --cflags --glibs` -std=c++0x -pthread
+g++ rocketSIM.cpp calc.cpp root.cpp Cpress/loadMesh/lmesh.cpp -o2 -o mtest1 `root-config --cflags --glibs` -std=c++0x -pthread
 #macro1
 
 #g++ muon.cpp gPT/GPT.cpp mROOT/mroot.cpp -o2 -o mugo `root-config --cflags --glibs` -std=c++0x -pthread

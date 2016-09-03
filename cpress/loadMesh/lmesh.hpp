@@ -34,10 +34,7 @@ struct quaternion
   float x, y, z, w;
 };
 
-vector< float> View (3);
-vector< float> View2 (3);
-vector< float> Axis (3);
-string projfile;
+
 
 
 //ijk vector
@@ -53,20 +50,31 @@ tvec vert1;
 tvec vert2;
 tvec vert3;
 tvec facet;
+float area;
 };
 
 //vector of vertices and facets
 struct striset
 {
 vector< stri> mesh;
+
+float i_limH;
+float i_limL;
+float j_limH;
+float j_limL;
+float k_limH;
+float k_limL;
+
 };
 
+
+void print_triangle(stri temp, int i);
 
 //project loader
 void load_mesh(striset & imesh, string cadfile);
 
 //bool cadpath(vector< vector <vector <double> > > Gpaths);
-
+float get_tri_area(tvec v1, tvec v2, tvec v3);
 
 //Generated points between reflected points for animation purposes
 void Tanimate(vector< vector <vector <double> > > & AFpath);

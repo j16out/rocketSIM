@@ -16,7 +16,10 @@ template <typename T> string tostr(const T& t) {
 }
 
 
-
+vector< float> View (3);
+vector< float> View2 (3);
+vector< float> Axis (3);
+string projfile;
 
 //quarternion functions
 quaternion mult(quaternion A, quaternion B);
@@ -32,6 +35,7 @@ tvec addvec(tvec v1, tvec v2);
 tvec subvec(tvec v1, tvec v2);
 tvec refvec(tvec v1, tvec v2, float sub);
 tvec vecaddnum(tvec v1, float f1, float f2, float f3);
+float get_dist(tvec v1, tvec v2);
 
 
 void getcad(striset & imesh, string cadfile);
@@ -54,19 +58,25 @@ void load_mesh(striset & imesh, string cadfile)
  float k = 1;
  while(run)
   {string temp;
-  temp.append("/cadd/");
+  cout << " Looking...\n";
+  temp.append("/home/jerin/rocketSIM/cpress/cadd/");
   temp.append(cadfile);
   temp.append(tostr(k));
   temp.append(".ast");
+  cout << "Attempting to open: " <<  temp << "\n";
 	  if(file_exists(temp))
 	  {
 	  getcad(imesh, temp);
 	  //cout << "\n" << imesh.size();
 	  }
 	  else
+	  {
 	  run = false;
-  ++k;
-  }
+	  cout << " ...failed\n";
+	  }
+	  ++k;
+}
+
 }
 
 
@@ -76,7 +86,7 @@ void load_mesh(striset & imesh, string cadfile)
 
 void getcad(striset & imesh, string cadfile)
 {  
-cout << "\n" << "loading cadd file: " << cadfile;
+cout << "loading cadd file: " << cadfile;
 const char * path;
 
 char norm;
@@ -98,21 +108,24 @@ std::cout << "\nRegular .ast Import: ";
 		}
 
 		int ind = 0;
+		int ggg = 0;
 
 		while( 1 ){
-
+			
 			char lineHeader[500];
 			// read the first word of the line
 			int res = fscanf(file, "%s", lineHeader);
 			if (res == EOF)
 				break; // EOF = End Of File. Quit the loop.
 
-			
+			/*if (ggg == 70)
+				break;
+				++ggg;*/
 
-		
+			//cout << lineHeader << "\n";
 			if ( strcmp( lineHeader, "vertex" ) == 0 ){
 				tvec vertex;
-				int matches = fscanf(file, " %e %e %e \n", &vertex.i, &vertex.j, &vertex.k );
+				int matches = fscanf(file, " %f %f %f \n", &vertex.i, &vertex.j, &vertex.k );
 			
 				if (matches != 3){
 					printf("File can't be read by our simple parser :-( problem with vertices\n");
@@ -120,17 +133,17 @@ std::cout << "\nRegular .ast Import: ";
 				}
 			
 				
-				//printf("   vertex: %f %f %f\n", vertex.x, vertex.y, vertex.z);
+				//printf("   vertex: %f %f %f\n", vertex.i, vertex.j, vertex.k);
 				if(ind == 1)
 				{
 				tri1.vert1 = vertex;
-				++ind;
 				}
+				
 				if(ind == 2)
 				{
 				tri1.vert2 = vertex;
-				++ind;
 				}
+				
 				if(ind == 3)
 				{
 				tri1.vert3 = vertex;
@@ -138,16 +151,17 @@ std::cout << "\nRegular .ast Import: ";
 				ind = 0;
 				}
 				
-				
+			++ind;	
 			}
 		
-			if ( strcmp( lineHeader, "facet" ) == 0 ){
+			if ( strcmp( lineHeader, "normal" ) == 0 ){
 				tvec normal;
-				int matches = fscanf(file, "%s %e %e %e \n", &norm, &normal.i, &normal.j, &normal.k );
-				if (matches != 4){
+				int matches = fscanf(file, "%f %f %f \n", &normal.i, &normal.j, &normal.k );
+				if (matches != 3){
 					printf("File can't be read by our simple parser :-( problem with normals\n");
 					return;
 				}
+				//printf("   normal: %f %f %f\n", normal.i, normal.j, normal.k);
 				if(ind == 0)
 				{
 				tri1.facet = normal;
@@ -163,7 +177,7 @@ std::cout << "\nRegular .ast Import: ";
 
 
 
-cout << "  size:" << imesh.mesh.size();		
+cout << "  size:" << imesh.mesh.size() << "\nFinshed \n\n";		
 }	
 
 
@@ -462,5 +476,44 @@ vcross.j = v1.j/hhh33;
 vcross.k = v1.k/hhh33;
 
 return vcross;
+}
+
+float get_dist(tvec v1, tvec v2)
+{
+float dist1 = 0;
+dist1 = sqrt( pow((v1.i-v2.i),2) + pow((v1.j-v2.j),2) + pow((v1.k-v2.k),2)); 
+return dist1;
+}
+
+
+float get_tri_area(tvec v1, tvec v2, tvec v3)
+{
+//Herons formula
+int n = 3;
+float area = 0;
+float aa = get_dist(v1, v2);
+float bb = get_dist(v2, v3);
+float cc = get_dist(v3, v1);
+
+float p = (aa+bb+cc)/2;
+area = sqrt(p*(p-aa)*(p-bb)*(p-cc));
+return area;   
+}
+
+
+
+
+
+
+
+
+
+
+
+
+//----------------------------print or view---------------------------------//
+void print_triangle(stri temp, int i)
+{
+printf("triangle %d :\nvert1 %f %f %f\nvert2 %f %f %f\nvert3 %f %f %f\nnorm1 %f %f %f\narea: %f\n\n", i+1, temp.vert1.i, temp.vert1.j, temp.vert1.k, temp.vert2.i, temp.vert2.j, temp.vert2.k, temp.vert3.i, temp.vert3.j, temp.vert3.k, temp.facet.i, temp.facet.j, temp.facet.k, temp.area);
 }
 

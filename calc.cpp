@@ -3,9 +3,10 @@
 using namespace std;
 
 
+//math
 void addvec(vec & vf, vec v1, vec v2);//v1+v2
 void subvec(vec & vf, vec v1, vec v2);//v1-v2
-void dotprod(float vs, vec v1, vec v2);
+float dotprod(vec v1, vec v2);
 void normalize(vec & vf, vec v1);
 
 
@@ -313,10 +314,13 @@ void subvec(vec & vf, vec v1, vec v2)
 vf.x = v1.x - v2.x;
 vf.y = v1.y - v2.y;
 }
-void dotprod(float vs, vec v1, vec v2)
+
+float dotprod(vec v1, vec v2)
 {
-vs = v1.x*v2.x + v1.y*v2.y;
+float vs = v1.x*v2.x + v1.y*v2.y;
+return vs;
 }
+
 void normalize(vec & vf, vec v1)
 {
 

@@ -24,8 +24,16 @@ printf("mesh size: %d\n", ff);
 
 set_limits(imesh);
 set_area(imesh);
+tvec forvec;
+forvec.i = 1;
+forvec.j = 1;
+forvec.k = 0;
+set_mforce(imesh, forvec, 10.0);
 
-print_triangle(imesh.mesh.at(0), 0);
+for(int i = 0; i < imesh.mesh.size(); ++i)
+{
+print_triangle(imesh.mesh.at(i), i);
+}
 print_triangle(imesh.mesh.at(1), 1);
 print_triangle(imesh.mesh.at(2), 2);
 
@@ -33,25 +41,22 @@ print_triangle(imesh.mesh.at(2), 2);
 }
 
 
-
-
-
-
-
-
-void set_area(striset & imesh)
+void set_mforce(striset & imesh, tvec forvec , float mag)
 {
 
 		
 	if(imesh.mesh.size() > 1)
 	{
 	
-	for(int i = 0; i < 4; ++i)
-		{stri temp;
+	for(int i = 0; i < imesh.mesh.size(); ++i)
+		{
+		stri temp;
 		temp = imesh.mesh.at(i);
-		float area = get_tri_area(temp.vert1,temp.vert2,temp.vert3);
-		temp.area = area;
-		//cout << "area: " << area << "\n";
+		float theta = get_angle(temp.facet,forvec); 
+		float force = mag*cos(theta);
+		temp.mforce = force;
+		cout << "theta: "<< (theta/(2.0*3.1415926))*360.0 << "\n";
+		cout << "force: " << force << "\n";
 		imesh.mesh.at(i) = temp;		
 		}
 	
@@ -59,6 +64,25 @@ void set_area(striset & imesh)
 	}
 
 
+}
+
+
+
+
+
+void set_area(striset & imesh)
+{		
+	if(imesh.mesh.size() > 1)
+	{	
+	for(int i = 0; i < imesh.mesh.size(); ++i)
+		{stri temp;
+		temp = imesh.mesh.at(i);
+		float area = get_tri_area(temp.vert1,temp.vert2,temp.vert3);
+		temp.area = area;
+		//cout << "area: " << area << "\n";
+		imesh.mesh.at(i) = temp;		
+		}	
+	}
 }
 
 
@@ -151,6 +175,36 @@ void set_limits(striset & imesh)
 	}
 
 }
+
+
+float get_angle(tvec force, tvec normal)
+{
+float theta = acos( dotprod(normal,force)/(sqrt(dotprod(normal,normal))*sqrt(dotprod(force,force))));
+
+return theta;
+}
+
+
+float dotprod(tvec v1, tvec v2)
+{
+float vs = v1.i*v2.i + v1.j*v2.j + v1.k*v2.k;
+return vs;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

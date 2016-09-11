@@ -23,24 +23,19 @@
 
 
 
+
 using namespace std;
 
-template <typename T> string tostr(const T& t) { 
-   ostringstream os; 
-   os<<t; 
-   return os.str();
-
-}
 
 void set_limits(striset & imesh);
 
 void set_area(striset & imesh);
 
+void set_mforce(striset & imesh, tvec forvec, float mag);
 
+float get_angle(tvec force, tvec normal);
 
-
-
-
+float dotprod(tvec v1, tvec v2);
 
 
 

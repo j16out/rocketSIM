@@ -132,7 +132,7 @@ std::cout << "\nRegular .ast Import: ";
 					return;
 				}
 			
-				
+				++ind;
 				//printf("   vertex: %f %f %f\n", vertex.i, vertex.j, vertex.k);
 				if(ind == 1)
 				{
@@ -151,7 +151,7 @@ std::cout << "\nRegular .ast Import: ";
 				ind = 0;
 				}
 				
-			++ind;	
+				
 			}
 		
 			if ( strcmp( lineHeader, "normal" ) == 0 ){
@@ -165,7 +165,6 @@ std::cout << "\nRegular .ast Import: ";
 				if(ind == 0)
 				{
 				tri1.facet = normal;
-				++ind;
 				}
 				
 			
@@ -514,6 +513,6 @@ return area;
 //----------------------------print or view---------------------------------//
 void print_triangle(stri temp, int i)
 {
-printf("triangle %d :\nvert1 %f %f %f\nvert2 %f %f %f\nvert3 %f %f %f\nnorm1 %f %f %f\narea: %f\n\n", i+1, temp.vert1.i, temp.vert1.j, temp.vert1.k, temp.vert2.i, temp.vert2.j, temp.vert2.k, temp.vert3.i, temp.vert3.j, temp.vert3.k, temp.facet.i, temp.facet.j, temp.facet.k, temp.area);
+printf("triangle %d :\nvert1 %f %f %f\nvert2 %f %f %f\nvert3 %f %f %f\nnorm1 %f %f %f\nmforce: %f\narea: %f\n\n", i+1, temp.vert1.i, temp.vert1.j, temp.vert1.k, temp.vert2.i, temp.vert2.j, temp.vert2.k, temp.vert3.i, temp.vert3.j, temp.vert3.k, temp.facet.i, temp.facet.j, temp.facet.k, temp.mforce, temp.area);
 }
 

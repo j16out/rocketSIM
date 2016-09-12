@@ -25,10 +25,10 @@ printf("mesh size: %d\n", ff);
 set_limits(imesh);
 set_area(imesh);
 tvec forvec;
-forvec.i = 1;
+forvec.i = 0.1;
 forvec.j = 0;
-forvec.k = 0;
-set_mforce(imesh, forvec, 10.0);
+forvec.k = 1;
+set_mforce(imesh, forvec, 1.0);
 
 /*for(int i = 0; i < imesh.mesh.size(); ++i)
 {
@@ -37,23 +37,22 @@ print_triangle(imesh.mesh.at(i), i);
 //print_triangle(imesh.mesh.at(1), 1);
 //print_triangle(imesh.mesh.at(2), 2);
 
-float ggg;// = find_centerx(imesh);
-//ggg = find_centery(imesh);
-ggg = find_centerz(imesh);
+float ggg = find_centerx(imesh, 0.1);
+ggg = find_centery(imesh, 0.1);
+ggg = find_centerz(imesh, 0.1);
 
  return 1;
 }
 
 
 
-float find_centerx(striset imesh)
+float find_centerx(striset imesh, float steps)
 {
 if(imesh.mesh.size() < 1)
 return -999999;
 		
 float limH = imesh.i_limH;
 float limL = imesh.i_limL;
-float steps = 0.1;
 float cstep = limL;
 
 float fhigh, flow;
@@ -78,7 +77,7 @@ float fhigh, flow;
 		
 		if(fhigh - flow <= 0)
 		{
-		printf("found middle x: %f, fhigh %f, flow %f\n", cstep, fhigh, flow);
+		printf("found middle x: %f, range h-l: %f - %f, fhigh %f, flow %f\n", cstep, limH, limL, fhigh, flow);
 		break;
 		}
 		
@@ -94,7 +93,7 @@ float fhigh, flow;
 
 }
 
-float find_centery(striset imesh)
+float find_centery(striset imesh, float steps)
 {
 printf("Finding Center Y\n");
 if(imesh.mesh.size() < 1)
@@ -102,7 +101,6 @@ return -999999;
 		
 float limH = imesh.j_limH;
 float limL = imesh.j_limL;
-float steps = 0.1;
 float cstep = limL;
 
 float fhigh, flow;
@@ -129,7 +127,7 @@ float fhigh, flow;
 		
 		if(fhigh - flow <= 0)
 		{
-		printf("found middle y: %f, fhigh %f, flow %f\n", cstep, fhigh, flow);
+		printf("found middle y: %f, range h-l: %f - %f, fhigh %f, flow %f\n", cstep, limH, limL, fhigh, flow);
 		break;
 		}
 		
@@ -145,7 +143,7 @@ float fhigh, flow;
 
 }
 
-float find_centerz(striset imesh)
+float find_centerz(striset imesh, float steps)
 {
 printf("Finding Center Z\n");
 if(imesh.mesh.size() < 1)
@@ -153,7 +151,6 @@ return -999999;
 		
 float limH = imesh.k_limH;
 float limL = imesh.k_limL;
-float steps = 0.5;
 float cstep = limL;
 
 float fhigh, flow;
@@ -175,7 +172,7 @@ float fhigh, flow;
 		flow = flow + temp.mforce;
 		
 		}
-		printf("Is middle ?: %f, fhigh %f, flow %f\n", cstep, fhigh, flow);
+		//printf("Is middle ?: %f, fhigh %f, flow %f\n", cstep, fhigh, flow);
 		
 		if(fhigh - flow <= 0)
 		{
@@ -208,7 +205,7 @@ printf("Setting Mforce\n");
 		stri temp;
 		temp = imesh.mesh.at(i);
 		float theta = get_angle(temp.facet,forvec); 
-		float force = mag*cos(theta);
+		float force = temp.area*mag*cos(theta);
 		temp.mforce = force;
 		//cout << "theta: "<< (theta/(2.0*3.1415926))*360.0 << "\n";
 		//cout << "force: " << force << "\n";

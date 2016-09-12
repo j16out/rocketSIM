@@ -62,58 +62,58 @@ ifstream file(c);
 		 { if (str.find(search1, 0) != string::npos)
 				 {  getline(file, str);
 				   wind = ::atof(str.c_str());   
-					cout << "found wind: " << wind;
+					cout << "\nfound wind: " << wind;
 		   		 }
 		   		 
 		   if (str.find(search2, 0) != string::npos)
 				 {  getline(file, str);
 				   btime = ::atof(str.c_str());   
-					cout << "found btime: " << btime;
+					cout << "\nfound btime: " << btime;
 		   		 }
 		   		 
 		   if (str.find(search3, 0) != string::npos)
 				 {  getline(file, str);
 				  tmass = ::atof(str.c_str());   
-					cout << "found tmass: " << tmass;
+					cout << "\nfound tmass: " << tmass;
 		   		 }
 		   if (str.find(search4, 0) != string::npos)
 				 {  getline(file, str);
 				  dragCd = ::atof(str.c_str());   
-					cout << "found dragCd: " << dragCd;
+					cout << "\nfound dragCd: " << dragCd;
 		   		 }
 		   		 
 		   if (str.find(search5, 0) != string::npos)
 				 {  getline(file, str);
 				  thrust = ::atof(str.c_str());   
-					cout << "found thrust: " << thrust;
+					cout << "\nfound thrust: " << thrust;
 		   		 }
 		   		 
 		   if (str.find(search6, 0) != string::npos)
 				 {  getline(file, str);
 				  Xarea = ::atof(str.c_str());   
-					cout << "found area: " << Xarea;
+					cout << "\nfound area: " << Xarea;
 		   		 }
 		  if (str.find(search7, 0) != string::npos)
 				 {  getline(file, str);
 				  promass = ::atof(str.c_str());   
-					cout << "found promass: " << promass;
+					cout << "\nfound promass: " << promass;
 		   		 }
 		   		 
 		   if (str.find(search8, 0) != string::npos)
 				 {  getline(file, str);
 				  vintx = ::atof(str.c_str());   
-					cout << "found vx: " << vintx;
+					cout << "\nfound vx: " << vintx;
 		   		 }
 		   		 
 		   if (str.find(search9, 0) != string::npos)
 				 {  getline(file, str);
 				  vinty = ::atof(str.c_str());   
-					cout << "found vy: " << vinty;
+					cout << "\nfound vy: " << vinty;
 		   		 }
 		   if (str.find(search10, 0) != string::npos)
 				 {  getline(file, str);
 				  para = ::atof(str.c_str());   
-					cout << "found vy: " << para;
+					cout << "\nfound vy: " << para;
 		   		 }
 
 		 }
@@ -164,41 +164,41 @@ ifstream file(c);
 		 { if (str.find(search1, 0) != string::npos)
 				 {  getline(file, str);
 				   pp0 = ::atof(str.c_str());   
-					cout << "found wind: " << pp0;
+					//cout << "\nfound wind: " << pp0;
 		   		 }
 		   		 
 		   if (str.find(search2, 0) != string::npos)
 				 {  getline(file, str);
 				   pp1 = ::atof(str.c_str());   
-					cout << "found btime: " << pp1;
+					//cout << "\nfound btime: " << pp1;
 		   		 }
 		   		 
 		   if (str.find(search3, 0) != string::npos)
 				 {  getline(file, str);
 				  pp2 = ::atof(str.c_str());   
-					cout << "found tmass: " << pp2;
+					//cout << "\nfound tmass: " << pp2;
 		   		 }
 		   if (str.find(search4, 0) != string::npos)
 				 {  getline(file, str);
 				  pp3 = ::atof(str.c_str());   
-					cout << "found dragCd: " << pp3;
+					//cout << "\nfound dragCd: " << pp3;
 		   		 }
 		   		 
 		   if (str.find(search5, 0) != string::npos)
 				 {  getline(file, str);
 				  pp4 = ::atof(str.c_str());   
-					cout << "found thrust: " << pp4;
+					//cout << "\nfound thrust: " << pp4;
 		   		 }
 		   		 
 		   if (str.find(search6, 0) != string::npos)
 				 {  getline(file, str);
 				  pp5 = ::atof(str.c_str());   
-					cout << "found area: " << pp5;
+					//cout << "\nfound area: " << pp5;
 				 }
 		   if (str.find(search7, 0) != string::npos)
 				 {  getline(file, str);
 				  pp6 = ::atof(str.c_str());   
-					cout << "found area: " << pp6;
+					//cout << "\nfound area: " << pp6;
 				 }
 		}
 file.close();
@@ -220,18 +220,18 @@ rf.fd.y = -temp.y*(0.5)*(1.225)*pow(mag(rp.v),2)*(dragCd)*Xarea;
 rf.fd.x = -temp.x*(0.5)*(1.225)*pow(mag(rp.v),2)*(dragCd)*Xarea;
 
 
-printf("Fdragx %f Fdragy %f\n", rf.fd.x , rf.fd.y);
+//printf("Fdragx %f Fdragy %f\n", rf.fd.x , rf.fd.y);
 
 //wind
 rf.fw.x = -(0.5)*(1.225)*pow(wind,2)*(dragCd)*Xarea*2;
 
-printf("Fwindx %f Fwindy %f\n", rf.fw.x , rf.fw.y);
+//printf("Fwindx %f Fwindy %f\n", rf.fw.x , rf.fw.y);
 
 
 //gravity
 rf.fg.y = rp.m*(-9.81);
 rf.fg.x = 0;
-printf("fgravityx %f fgravityy %f\n", rf.fg.x , rf.fg.y);
+//printf("fgravityx %f fgravityy %f\n", rf.fg.x , rf.fg.y);
 
 
 //thrust
@@ -241,18 +241,18 @@ float x = tstep;
 thrust = (pp4*exp(-0.5*pow((x-pp6)/pp5,2)))+(((x-pp3)>0)*(-(pp2)*(exp(-(x-pp3)/pp0)-exp(-(x-pp3)/pp1))));
  if(thrust < 0)
  thrust = thrust*(-1.0);
-printf("thrust %f \n", thrust);
+//printf("thrust %f \n", thrust);
 }
 normalize(temp, rp.v);
 rf.ft.x = thrust*(temp.x);
 rf.ft.y = thrust*(temp.y);
-printf("thrustx %f thrusty %f\n", rf.ft.x , rf.ft.y);
+//printf("thrustx %f thrusty %f\n", rf.ft.x , rf.ft.y);
 //sum fores
 vec temp2;
 addvec(temp, rf.ft, rf.fg);
 addvec(temp2, temp, rf.fd);
 addvec(rp.Ft, temp2, rf.fw);
-printf("Ftotalx %f Ftotaly %f\n\n", rp.Ft.x , rp.Ft.y);
+//printf("Ftotalx %f Ftotaly %f\n\n", rp.Ft.x , rp.Ft.y);
 
 
 }
@@ -289,7 +289,7 @@ else
 rp.v.y = abs(rp.v.y);
 rp.d.y = 0;
 }
-printf("Final vx %f, vy %f, dx %f, dy %f, m %f\n\n\n", rp.v.x, rp.v.y, rp.d.x, rp.d.y, rp.m);
+//printf("Final vx %f, vy %f, dx %f, dy %f, m %f\n\n\n", rp.v.x, rp.v.y, rp.d.x, rp.d.y, rp.m);
 
 
 }

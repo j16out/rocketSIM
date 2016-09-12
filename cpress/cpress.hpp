@@ -42,7 +42,7 @@ float find_centerx(striset imesh, float steps);
 float find_centery(striset imesh, float steps);
 float find_centerz(striset imesh, float steps);
 
-
+float get_cpress();
 
 
 

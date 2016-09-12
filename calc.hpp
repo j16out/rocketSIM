@@ -18,6 +18,7 @@
 #include <iterator>
 #include <sys/stat.h>
 #include <unistd.h>
+#include "cpress/cpress.hpp"
 
 
 

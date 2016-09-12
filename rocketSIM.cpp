@@ -20,6 +20,7 @@ using namespace std;
 
 int main(int argc, char **argv)
 {
+get_cpress(); 
  
 fvec dfinal;
 prock rp1;
@@ -30,8 +31,8 @@ float delay = 7.0;
 
 
 //initialize
-initialize(rp1, rf1,"spec/Arachnid_D12.txt");
-use_thrustCurve("spec/D12-5.txt");
+initialize(rp1, rf1,"spec/Arachnid_D12-7.txt");
+use_thrustCurve("spec/D12.txt");
 btime = get_btime();
 int ind = 0;
 
@@ -81,7 +82,7 @@ log_data(rp1, dfinal);
 }
 
 
-printf("data size dfinal: %ld\n", dfinal.v.size());
+printf("\n\ndata size dfinal: %ld\nDrawing Data...\n", dfinal.v.size());
 
 if(dfinal.v.size() > 0)
 {

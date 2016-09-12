@@ -4,7 +4,7 @@ using namespace std;
 
 
 
-int main()
+float get_cpress()
 {
 striset imesh;
 string cadfile = "rocket";
@@ -41,7 +41,7 @@ float ggg = find_centerx(imesh, 0.1);
 ggg = find_centery(imesh, 0.1);
 ggg = find_centerz(imesh, 0.1);
 
- return 1;
+ return ggg;
 }
 
 

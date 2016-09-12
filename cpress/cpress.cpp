@@ -7,7 +7,7 @@ using namespace std;
 int main()
 {
 striset imesh;
-string cadfile = "cyl";
+string cadfile = "rocket";
 
 
 load_mesh(imesh, cadfile);
@@ -26,24 +26,179 @@ set_limits(imesh);
 set_area(imesh);
 tvec forvec;
 forvec.i = 1;
-forvec.j = 1;
+forvec.j = 0;
 forvec.k = 0;
 set_mforce(imesh, forvec, 10.0);
 
-for(int i = 0; i < imesh.mesh.size(); ++i)
+/*for(int i = 0; i < imesh.mesh.size(); ++i)
 {
 print_triangle(imesh.mesh.at(i), i);
-}
-print_triangle(imesh.mesh.at(1), 1);
-print_triangle(imesh.mesh.at(2), 2);
+}*/
+//print_triangle(imesh.mesh.at(1), 1);
+//print_triangle(imesh.mesh.at(2), 2);
+
+float ggg;// = find_centerx(imesh);
+//ggg = find_centery(imesh);
+ggg = find_centerz(imesh);
 
  return 1;
 }
 
 
+
+float find_centerx(striset imesh)
+{
+if(imesh.mesh.size() < 1)
+return -999999;
+		
+float limH = imesh.i_limH;
+float limL = imesh.i_limL;
+float steps = 0.1;
+float cstep = limL;
+
+float fhigh, flow;
+
+	while(1)
+	{
+		fhigh = 0;
+		flow = 0;
+		
+
+		for(int i = 0; i < imesh.mesh.size(); ++i)
+		{
+		stri temp;
+		temp = imesh.mesh.at(i);
+		if(temp.vert1.i >= cstep & temp.vert2.i >= cstep & temp.vert3.i >= cstep & temp.mforce > 0.0)
+		fhigh = fhigh + temp.mforce;
+		
+		if(temp.vert1.i <= cstep & temp.vert2.i <= cstep & temp.vert3.i <= cstep & temp.mforce > 0.0)
+		flow = flow + temp.mforce;
+		
+		}
+		
+		if(fhigh - flow <= 0)
+		{
+		printf("found middle x: %f, fhigh %f, flow %f\n", cstep, fhigh, flow);
+		break;
+		}
+		
+		if(cstep >= limH)
+		break;
+		
+		
+		cstep = cstep + steps;  
+	
+	
+	}
+
+
+}
+
+float find_centery(striset imesh)
+{
+printf("Finding Center Y\n");
+if(imesh.mesh.size() < 1)
+return -999999;
+		
+float limH = imesh.j_limH;
+float limL = imesh.j_limL;
+float steps = 0.1;
+float cstep = limL;
+
+float fhigh, flow;
+
+	while(1)
+	{
+		fhigh = 0;
+		flow = 0;
+		
+
+		for(int i = 0; i < imesh.mesh.size(); ++i)
+		{
+		stri temp;
+		temp = imesh.mesh.at(i);
+		if(temp.vert1.j > cstep & temp.vert2.j > cstep & temp.vert3.j > cstep & temp.mforce > 0.0)
+		fhigh = fhigh + temp.mforce;
+		
+		if(temp.vert1.j < cstep & temp.vert2.j < cstep & temp.vert3.j < cstep & temp.mforce > 0.0)
+		flow = flow + temp.mforce;
+		
+		}
+		
+		
+		
+		if(fhigh - flow <= 0)
+		{
+		printf("found middle y: %f, fhigh %f, flow %f\n", cstep, fhigh, flow);
+		break;
+		}
+		
+		if(cstep >= limH)
+		break;
+		
+		
+		cstep = cstep + steps;  
+	
+	
+	}
+
+
+}
+
+float find_centerz(striset imesh)
+{
+printf("Finding Center Z\n");
+if(imesh.mesh.size() < 1)
+return -999999;
+		
+float limH = imesh.k_limH;
+float limL = imesh.k_limL;
+float steps = 0.5;
+float cstep = limL;
+
+float fhigh, flow;
+
+	while(1)
+	{
+		fhigh = 0;
+		flow = 0;
+		
+
+		for(int i = 0; i < imesh.mesh.size(); ++i)
+		{
+		stri temp;
+		temp = imesh.mesh.at(i);
+		if(temp.vert1.k > cstep & temp.vert2.k > cstep & temp.vert3.k > cstep & temp.mforce > 0.0)
+		fhigh = fhigh + temp.mforce;
+		
+		if(temp.vert1.k < cstep & temp.vert2.k < cstep & temp.vert3.k < cstep & temp.mforce > 0.0)
+		flow = flow + temp.mforce;
+		
+		}
+		printf("Is middle ?: %f, fhigh %f, flow %f\n", cstep, fhigh, flow);
+		
+		if(fhigh - flow <= 0)
+		{
+		printf("found middle z: %f, range h-l: %f - %f, fhigh %f, flow %f\n", cstep, limH, limL, fhigh, flow);
+		break;
+		}
+		
+		if(cstep >= limH)
+		break;
+		
+		
+		cstep = cstep + steps;  
+	
+	
+	}
+
+
+}
+
+
 void set_mforce(striset & imesh, tvec forvec , float mag)
 {
-
+printf("Setting Mforce\n");
 		
 	if(imesh.mesh.size() > 1)
 	{
@@ -55,8 +210,8 @@ void set_mforce(striset & imesh, tvec forvec , float mag)
 		float theta = get_angle(temp.facet,forvec); 
 		float force = mag*cos(theta);
 		temp.mforce = force;
-		cout << "theta: "<< (theta/(2.0*3.1415926))*360.0 << "\n";
-		cout << "force: " << force << "\n";
+		//cout << "theta: "<< (theta/(2.0*3.1415926))*360.0 << "\n";
+		//cout << "force: " << force << "\n";
 		imesh.mesh.at(i) = temp;		
 		}
 	
@@ -71,7 +226,7 @@ void set_mforce(striset & imesh, tvec forvec , float mag)
 
 
 void set_area(striset & imesh)
-{		
+{printf("Setting Area\n");		
 	if(imesh.mesh.size() > 1)
 	{	
 	for(int i = 0; i < imesh.mesh.size(); ++i)
@@ -89,7 +244,9 @@ void set_area(striset & imesh)
 
 
 void set_limits(striset & imesh)
-{float i_limH = 0;
+{
+printf("Setting Limits\n");
+float i_limH = 0;
  float i_limL = 0;
  float j_limH = 0;
  float j_limL = 0;

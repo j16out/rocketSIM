@@ -38,7 +38,9 @@ float get_angle(tvec force, tvec normal);
 float dotprod(tvec v1, tvec v2);
 
 
-
+float find_centerx(striset imesh);
+float find_centery(striset imesh);
+float find_centerz(striset imesh);
 
 
 

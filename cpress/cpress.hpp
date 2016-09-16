@@ -31,7 +31,7 @@ void set_limits(striset & imesh);
 
 void set_area(striset & imesh);
 
-void set_mforce(striset & imesh, tvec forvec, float mag);
+void set_aproj(striset & imesh, tvec forvec, float mag);
 
 float get_angle(tvec force, tvec normal);
 

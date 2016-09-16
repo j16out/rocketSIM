@@ -51,7 +51,7 @@ tvec vert2;
 tvec vert3;
 tvec facet;
 float area;
-float mforce;
+float aproj;
 };
 
 //vector of vertices and facets

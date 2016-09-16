@@ -28,7 +28,7 @@ tvec forvec;
 forvec.i = 0.1;
 forvec.j = 0;
 forvec.k = 1;
-set_mforce(imesh, forvec, 1.0);
+set_aproj(imesh, forvec, 1.0);
 
 /*for(int i = 0; i < imesh.mesh.size(); ++i)
 {
@@ -67,11 +67,11 @@ float fhigh, flow;
 		{
 		stri temp;
 		temp = imesh.mesh.at(i);
-		if(temp.vert1.i >= cstep & temp.vert2.i >= cstep & temp.vert3.i >= cstep & temp.mforce > 0.0)
-		fhigh = fhigh + temp.mforce;
+		if(temp.vert1.i >= cstep & temp.vert2.i >= cstep & temp.vert3.i >= cstep & temp.aproj > 0.0)
+		fhigh = fhigh + temp.aproj;
 		
-		if(temp.vert1.i <= cstep & temp.vert2.i <= cstep & temp.vert3.i <= cstep & temp.mforce > 0.0)
-		flow = flow + temp.mforce;
+		if(temp.vert1.i <= cstep & temp.vert2.i <= cstep & temp.vert3.i <= cstep & temp.aproj > 0.0)
+		flow = flow + temp.aproj;
 		
 		}
 		
@@ -115,11 +115,11 @@ float fhigh, flow;
 		{
 		stri temp;
 		temp = imesh.mesh.at(i);
-		if(temp.vert1.j > cstep & temp.vert2.j > cstep & temp.vert3.j > cstep & temp.mforce > 0.0)
-		fhigh = fhigh + temp.mforce;
+		if(temp.vert1.j > cstep & temp.vert2.j > cstep & temp.vert3.j > cstep & temp.aproj > 0.0)
+		fhigh = fhigh + temp.aproj;
 		
-		if(temp.vert1.j < cstep & temp.vert2.j < cstep & temp.vert3.j < cstep & temp.mforce > 0.0)
-		flow = flow + temp.mforce;
+		if(temp.vert1.j < cstep & temp.vert2.j < cstep & temp.vert3.j < cstep & temp.aproj > 0.0)
+		flow = flow + temp.aproj;
 		
 		}
 		
@@ -165,11 +165,11 @@ float fhigh, flow;
 		{
 		stri temp;
 		temp = imesh.mesh.at(i);
-		if(temp.vert1.k > cstep & temp.vert2.k > cstep & temp.vert3.k > cstep & temp.mforce > 0.0)
-		fhigh = fhigh + temp.mforce;
+		if(temp.vert1.k > cstep & temp.vert2.k > cstep & temp.vert3.k > cstep & temp.aproj > 0.0)
+		fhigh = fhigh + temp.aproj;
 		
-		if(temp.vert1.k < cstep & temp.vert2.k < cstep & temp.vert3.k < cstep & temp.mforce > 0.0)
-		flow = flow + temp.mforce;
+		if(temp.vert1.k < cstep & temp.vert2.k < cstep & temp.vert3.k < cstep & temp.aproj > 0.0)
+		flow = flow + temp.aproj;
 		
 		}
 		//printf("Is middle ?: %f, fhigh %f, flow %f\n", cstep, fhigh, flow);
@@ -193,9 +193,9 @@ float fhigh, flow;
 }
 
 
-void set_mforce(striset & imesh, tvec forvec , float mag)
+void set_aproj(striset & imesh, tvec forvec , float mag)
 {
-printf("Setting Mforce\n");
+printf("Setting Area-proj\n");
 		
 	if(imesh.mesh.size() > 1)
 	{
@@ -206,7 +206,7 @@ printf("Setting Mforce\n");
 		temp = imesh.mesh.at(i);
 		float theta = get_angle(temp.facet,forvec); 
 		float force = temp.area*mag*cos(theta);
-		temp.mforce = force;
+		temp.aproj = force;
 		//cout << "theta: "<< (theta/(2.0*3.1415926))*360.0 << "\n";
 		//cout << "force: " << force << "\n";
 		imesh.mesh.at(i) = temp;		

@@ -8,8 +8,8 @@
 #include <sstream>
 #include <math.h> 
 #include "TApplication.h"
-#include "calc.hpp"
-#include "root.hpp"
+#include "simcalc/calc.hpp"
+#include "vroot/root.hpp"
 #include <thread>
 
 //g++ rocketSIM.cpp calc.cpp -Wall -o2 -o test1 `root-config --cflags --glibs` -std=c++0x -pthread
@@ -20,7 +20,7 @@ using namespace std;
 
 int main(int argc, char **argv)
 {
-get_cpress(); 
+//get_cpress(); 
  
 fvec dfinal;
 prock rp1;
@@ -82,7 +82,7 @@ log_data(rp1, dfinal);
 }
 
 
-printf("\n\ndata size dfinal: %ld\nDrawing Data...\n", dfinal.v.size());
+printf("\n\ndata size dfinal: %ld\nDrawing Data...ctrl-c to quit\n", dfinal.v.size());
 
 if(dfinal.v.size() > 0)
 {

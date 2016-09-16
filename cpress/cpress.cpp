@@ -90,7 +90,7 @@ float fhigh, flow;
 	
 	}
 
-
+return cstep;
 }
 
 float find_centery(striset imesh, float steps)
@@ -140,7 +140,7 @@ float fhigh, flow;
 	
 	}
 
-
+return cstep;
 }
 
 float find_centerz(striset imesh, float steps)
@@ -189,7 +189,7 @@ float fhigh, flow;
 	
 	}
 
-
+return cstep;
 }
 
 

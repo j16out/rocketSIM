@@ -1,8 +1,11 @@
-A simple 2D model rocket trajectory simulator using numerical methods.
+A simple 2D model rocket trajectory simulator using numerical methods. 
+Includes center of pressure finder for meshes and thrust curve creater
 Compiled on ubuntu 16.04 g++ 5.4.0 created by Jerin Roberts 09/05/2016
-should run on mac, or windows 10 anniversary with bash
+runs on linux, mac, or windows 10 anniversary with 'subsystem for linux' bash
 
 To install clone or download files, compile using: "sh compile.sh"
+***note will need to change include file paths in calc.hpp and root.hpp***
+ie replace /home/jerin/rocketSIM... with your working directory
 
 requisits:
 - g++/gcc

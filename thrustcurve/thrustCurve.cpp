@@ -44,12 +44,12 @@ int read()
 
 //rise fall with long fall
 float pp0 = 0.035;//rise time
-float pp1 = 100;
-float pp2 = 10;//height of lowlevel platue
+float pp1 = 5;
+float pp2 = 1200;//height of lowlevel platue
 float pp3 = 0.075;//center
 
 //guassian
-float pp4 = 20;//height
+float pp4 = 300;//height
 float pp5 =0.075;//width
 float pp6 = 0.25;//center
 
@@ -62,7 +62,7 @@ float x = 0;
 float y = 0;
 
 TGraph *gr1 = new TGraph();
-for (int i = 0; i < 160; ++i)
+for (int i = 0; i < 300; ++i)
 {
 x = i*0.01;
 xs.push_back(x);

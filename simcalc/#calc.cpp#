@@ -5,10 +5,10 @@ using namespace std;
 
 
 //math
-void addvec(vec & vf, vec v1, vec v2);//add vectors v1+v2
-void subvec(vec & vf, vec v1, vec v2);//subtract vectors v1-v2
-float dotprod(vec v1, vec v2);//dot rpoduct
-void normalize(vec & vf, vec v1);//normalize vector
+void addvec(vec & vf, vec v1, vec v2);//v1+v2
+void subvec(vec & vf, vec v1, vec v2);//v1-v2
+float dotprod(vec v1, vec v2);
+void normalize(vec & vf, vec v1);
 
 
 
@@ -37,7 +37,7 @@ float pp5 =0.075;//width
 float pp6 = 0.25;//center
 
 
-//main functions
+//functions
 
 
 void initialize(prock & rp, frock & rf, string filename)
@@ -221,54 +221,54 @@ rf.fd.y = -temp.y*(0.5)*(1.225)*pow(mag(rp.v),2)*(dragCd)*Xarea;
 rf.fd.x = -temp.x*(0.5)*(1.225)*pow(mag(rp.v),2)*(dragCd)*Xarea;
 
 
-//printf("Fdragx %f Fdragy %f\n", rf.fd.x , rf.fd.y);
+// //printf("Fdragx %f Fdragy %f\n", rf.fd.x , rf.fd.y);
 
-//wind
-rf.fw.x = -(0.5)*(1.225)*pow(wind,2)*(dragCd)*Xarea*2;
+// //wind
+// //rf.fw.x = -(0.5)*(1.225)*pow(wind,2)*(dragCd)*Xarea*2;
 
-//printf("Fwindx %f Fwindy %f\n", rf.fw.x , rf.fw.y);
-
-
-//gravity
-rf.fg.y = rp.m*(-9.81);
-rf.fg.x = 0;
-//printf("fgravityx %f fgravityy %f\n", rf.fg.x , rf.fg.y);
+// //printf("Fwindx %f Fwindy %f\n", rf.fw.x , rf.fw.y);
 
 
-//thrust
-if(thcurv)
-{
-float x = tstep;
-thrust = (pp4*exp(-0.5*pow((x-pp6)/pp5,2)))+(((x-pp3)>0)*(-(pp2)*(exp(-(x-pp3)/pp0)-exp(-(x-pp3)/pp1))));
- if(thrust < 0)
- thrust = thrust*(-1.0);
-//printf("thrust %f \n", thrust);
-}
-normalize(temp, rp.v);
-rf.ft.x = thrust*(temp.x);
-rf.ft.y = thrust*(temp.y);
-//printf("thrustx %f thrusty %f\n", rf.ft.x , rf.ft.y);
-//sum fores
-vec temp2;
-addvec(temp, rf.ft, rf.fg);
-addvec(temp2, temp, rf.fd);
-addvec(rp.Ft, temp2, rf.fw);
-//printf("Ftotalx %f Ftotaly %f\n\n", rp.Ft.x , rp.Ft.y);
+// //gravity
+// rf.fg.y = rp.m*(-9.81);
+// rf.fg.x = 0;
+// //printf("fgravityx %f fgravityy %f\n", rf.fg.x , rf.fg.y);
 
 
-}
+// //thrust
+// if(thcurv)
+// {
+// float x = tstep;
+// thrust = (pp4*exp(-0.5*pow((x-pp6)/pp5,2)))+(((x-pp3)>0)*(-(pp2)*(exp(-(x-pp3)/pp0)-exp(-(x-pp3)/pp1))));
+//  if(thrust < 0)
+//  thrust = thrust*(-1.0);
+// //printf("thrust %f \n", thrust);
+// }
+// normalize(temp, rp.v);
+// rf.ft.x = thrust*(temp.x);
+// rf.ft.y = thrust*(temp.y);
+// //printf("thrustx %f thrusty %f\n", rf.ft.x , rf.ft.y);
+// //sum fores
+// vec temp2;
+// addvec(temp, rf.ft, rf.fg);
+// addvec(temp2, temp, rf.fd);
+// addvec(rp.Ft, temp2, rf.fw);
+// //printf("Ftotalx %f Ftotaly %f\n\n", rp.Ft.x , rp.Ft.y);
 
-//------------------Kinematics-----------------//
 
-void calc_kinematics(prock & rp, float tstep)
-{
-vec vfinal;
-vec dfinal;
+// }
 
-vec a;
+// //------------------Kinematics-----------------//
 
-a.x = rp.Ft.x/rp.m;
-a.y = rp.Ft.y/rp.m;
+// void calc_kinematics(prock & rp, float tstep)
+// {
+// vec vfinal;
+// vec dfinal;
+
+// vec a;
+
+// a.x = rp.Ft.x/rp.m;
+// a.y = rp.Ft.y/rp.m;
 
 vfinal.x = rp.v.x + a.x*(tstep);
 vfinal.y = rp.v.y + a.y*(tstep);
